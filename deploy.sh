@@ -59,7 +59,13 @@ cd "$FRONTEND_DIR" || error "Impossible d'accéder au répertoire $FRONTEND_DIR"
 
 # Installer les dépendances
 log "Installation des dépendances..."
-npm ci --production=false
+if command -v pnpm > /dev/null 2>&1; then
+    pnpm install --frozen-lockfile
+else
+    log "PNPM non trouvé, installation..."
+    npm install -g pnpm
+    pnpm install --frozen-lockfile
+fi
 
 # Exécuter les tests (optionnel)
 log "Exécution des tests..."

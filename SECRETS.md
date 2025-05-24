@@ -2,7 +2,7 @@
 
 Pour configurer le déploiement automatique, vous devez ajouter les secrets suivants dans votre repository GitHub :
 
-## Comment ajouter les secrets :
+## Comment ajouter les secrets :'
 
 1. Allez dans votre repository GitHub
 2. Cliquez sur "Settings"
@@ -10,7 +10,7 @@ Pour configurer le déploiement automatique, vous devez ajouter les secrets suiv
 4. Cliquez sur "New repository secret"
 5. Ajoutez les secrets suivants :
 
-## Secrets requis :
+## Secrets requis :'
 
 ### HOST
 
@@ -43,11 +43,11 @@ Pour configurer le déploiement automatique, vous devez ajouter les secrets suiv
 
 ### PORT (optionnel)
 
-- **Nom** : `PORT`
+- **Nom** : `SERVER_PORT`
 - **Valeur** : Le port SSH (par défaut 22)
 - **Exemple** : `22`
 
-## Variables d'environnement (optionnel) :
+## Variables d'environnement (optionnel) :'
 
 Si votre application utilise des variables d'environnement, ajoutez-les aussi :
 

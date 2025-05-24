@@ -1,5 +1,7 @@
 @import './base.css';
 @import "tailwindcss";
+/* @plugin 'tailgrids/plugin'; */
+@plugin 'tailgrids/plugin';
 
 
 :root {

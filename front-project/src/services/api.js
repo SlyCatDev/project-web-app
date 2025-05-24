@@ -1,78 +1,155 @@
 // Services pour Fake Store API
-const API_URL = 'https://fakestoreapi.com';
+const API_URL = import.meta.env.VITE_API_URL || 'https://fakestoreapi.com';
+
+// Affichage de l'URL API en mode développement
+if (import.meta.env.DEV) {
+  console.log('🌐 API URL configurée:', API_URL);
+}
+
+// Configuration globale pour les requêtes
+const defaultOptions = {
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
+};
+
+// Fonction utilitaire pour gérer les erreurs
+const handleResponse = async (response) => {
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`HTTP ${response.status}: ${error}`);
+  }
+  return response.json();
+};
 
 // Service pour les produits
 export const productService = {
   // Récupérer tous les produits
-  getAllProducts(limit = null, sort = null) {
-    let url = `${API_URL}/products`;
-    const params = [];
-    
-    if (limit) params.push(`limit=${limit}`);
-    if (sort) params.push(`sort=${sort}`);
-    
-    if (params.length > 0) {
-      url += `?${params.join('&')}`;
+  async getAllProducts(limit = null, sort = null) {
+    try {
+      let url = `${API_URL}/products`;
+      const params = [];
+      
+      if (limit) params.push(`limit=${limit}`);
+      if (sort) params.push(`sort=${sort}`);
+      
+      if (params.length > 0) {
+        url += `?${params.join('&')}`;
+      }
+      
+      const response = await fetch(url, defaultOptions);
+      return await handleResponse(response);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des produits:', error);
+      throw error;
     }
-    
-    return fetch(url).then(res => res.json());
   },
   
   // Récupérer un produit par son ID
-  getProduct(id) {
-    return fetch(`${API_URL}/products/${id}`).then(res => res.json());
+  async getProduct(id) {
+    try {
+      const response = await fetch(`${API_URL}/products/${id}`, defaultOptions);
+      return await handleResponse(response);
+    } catch (error) {
+      console.error(`Erreur lors de la récupération du produit ${id}:`, error);
+      throw error;
+    }
   },
   
   // Récupérer les produits par catégorie
-  getProductsByCategory(category) {
-    return fetch(`${API_URL}/products/category/${category}`).then(res => res.json());
+  async getProductsByCategory(category) {
+    try {
+      const response = await fetch(`${API_URL}/products/category/${category}`, defaultOptions);
+      return await handleResponse(response);
+    } catch (error) {
+      console.error(`Erreur lors de la récupération des produits de la catégorie ${category}:`, error);
+      throw error;
+    }
   },
   
   // Récupérer toutes les catégories
-  getCategories() {
-    return fetch(`${API_URL}/products/categories`).then(res => res.json());
+  async getCategories() {
+    try {
+      const response = await fetch(`${API_URL}/products/categories`, defaultOptions);
+      return await handleResponse(response);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des catégories:', error);
+      throw error;
+    }
   }
 };
 
 // Service pour le panier
 export const cartService = {
   // Récupérer tous les paniers
-  getAllCarts() {
-    return fetch(`${API_URL}/carts`).then(res => res.json());
+  async getAllCarts() {
+    try {
+      const response = await fetch(`${API_URL}/carts`, defaultOptions);
+      return await handleResponse(response);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des paniers:', error);
+      throw error;
+    }
   },
   
   // Récupérer un panier par son ID
-  getCart(id) {
-    return fetch(`${API_URL}/carts/${id}`).then(res => res.json());
+  async getCart(id) {
+    try {
+      const response = await fetch(`${API_URL}/carts/${id}`, defaultOptions);
+      return await handleResponse(response);
+    } catch (error) {
+      console.error(`Erreur lors de la récupération du panier ${id}:`, error);
+      throw error;
+    }
   }
 };
 
 // Service pour les utilisateurs
 export const userService = {
   // Récupérer tous les utilisateurs
-  getAllUsers() {
-    return fetch(`${API_URL}/users`).then(res => res.json());
+  async getAllUsers() {
+    try {
+      const response = await fetch(`${API_URL}/users`, defaultOptions);
+      return await handleResponse(response);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des utilisateurs:', error);
+      throw error;
+    }
   },
   
   // Récupérer un utilisateur par son ID
-  getUser(id) {
-    return fetch(`${API_URL}/users/${id}`).then(res => res.json());
+  async getUser(id) {
+    try {
+      const response = await fetch(`${API_URL}/users/${id}`, defaultOptions);
+      return await handleResponse(response);
+    } catch (error) {
+      console.error(`Erreur lors de la récupération de l'utilisateur ${id}:`, error);
+      throw error;
+    }
   }
 };
 
 // Service d'authentification
 export const authService = {
   // Connexion utilisateur
-  login(username, password) {
-    return fetch(`${API_URL}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username,
-        password
-      })
-    }).then(res => res.json());
+  async login(username, password) {
+    try {
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          username,
+          password
+        })
+      });
+      return await handleResponse(response);
+    } catch (error) {
+      console.error('Erreur lors de la connexion:', error);
+      throw error;
+    }
   }
 };

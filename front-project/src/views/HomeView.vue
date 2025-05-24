@@ -17,6 +17,11 @@
         :limit="4"
         @add-to-cart="handleAddToCart"
       />
+      
+      <!-- Composant de test API (uniquement en développement) -->
+      <div v-if="isDev" class="container mx-auto px-4 py-8">
+        <ApiHealthCheck />
+      </div>
     </main>
     
     <FooterSection />
@@ -28,6 +33,7 @@ import NavBar from '@/components/layout/NavBar.vue';
 import HeroBanner from '@/components/layout/HeroBanner.vue';
 import TrendingProducts from '@/components/products/TrendingProducts.vue';
 import FooterSection from '@/components/layout/FooterSection.vue';
+import ApiHealthCheck from '@/components/ApiHealthCheck.vue';
 
 export default {
   name: 'HomeView',
@@ -35,7 +41,8 @@ export default {
     NavBar,
     HeroBanner,
     TrendingProducts,
-    FooterSection
+    FooterSection,
+    ApiHealthCheck
   },
   data() {
     return {
@@ -52,6 +59,11 @@ export default {
     handleAddToCart(product) {
       console.log('Product added to cart:', product);
       // TO-DO : implémenter la logique d'ajout au panier
+    }
+  },
+  computed: {
+    isDev() {
+      return import.meta.env.DEV;
     }
   }
 };

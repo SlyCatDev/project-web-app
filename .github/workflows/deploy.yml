@@ -88,7 +88,7 @@ jobs:
           set -e
           echo "🚀 Début du déploiement..."
           echo "📍 Serveur: $(hostname)"
-          echo "👤 Utilisateur: $(whoami)"
+          echo "👤 Utilisateur: deploy"
           echo "📁 Répertoire de travail: $(pwd)"
           
           # Configurer git safe directory dès le début
@@ -100,19 +100,19 @@ jobs:
             echo "❌ Répertoire /var/www/project-web-app non trouvé"
             echo "📝 Création du répertoire..."
             sudo mkdir -p /var/www/project-web-app
-            sudo chown $(whoami):$(whoami) /var/www/project-web-app
+            sudo chown deploy /var/www/project-web-app
             
             echo "📥 Clonage initial du repository..."
             cd /var/www
             git clone https://github.com/SlyCatDev/project-web-app.git
             
             # Ajuster les permissions après le clonage
-            sudo chown -R $(whoami):$(whoami) /var/www/project-web-app
+            sudo chown -R deploy /var/www/project-web-app
           else
             echo "📁 Répertoire existant trouvé"
             # Corriger les permissions du répertoire existant
             echo "🔧 Correction des permissions..."
-            sudo chown -R $(whoami):$(whoami) /var/www/project-web-app
+            sudo chown -R deploy /var/www/project-web-app
             sudo chmod -R u+rwX /var/www/project-web-app
           fi
           
@@ -122,7 +122,7 @@ jobs:
           echo "🔍 Vérification des permissions git..."
           if [ ! -w ".git/FETCH_HEAD" ] 2>/dev/null; then
             echo "🔧 Correction des permissions git..."
-            sudo chown -R $(whoami):$(whoami) .git/
+            sudo chown -R deploy .git/
             sudo chmod -R u+rwX .git/
           fi
           

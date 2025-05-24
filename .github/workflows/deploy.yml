@@ -81,17 +81,47 @@ jobs:
         host: ${{ secrets.SERVER_IP }}
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.PRIVATE_KEY }}
-        port: ${{ secrets.SERVER_PORT }} 
+        port: ${{ secrets.SERVER_PORT || 22 }}
+        timeout: 60s
+        command_timeout: 5m
         script: |
-          cd /var/www/project-web-app
-          git pull origin main
-          cd front-project
-          # Installer pnpm sur le serveur si nécessaire
-          if ! command -v pnpm &> /dev/null; then
-            npm install -g pnpm
+          set -e
+          echo "🚀 Début du déploiement..."
+          echo "📍 Serveur: $(hostname)"
+          echo "👤 Utilisateur: $(whoami)"
+          echo "📁 Répertoire de travail: $(pwd)"
+          
+          # Vérifier que le répertoire existe
+          if [ ! -d "/var/www/project-web-app" ]; then
+            echo "❌ Répertoire /var/www/project-web-app non trouvé"
+            echo "📝 Création du répertoire..."
+            sudo mkdir -p /var/www/project-web-app
+            sudo chown $(whoami):$(whoami) /var/www/project-web-app
+            
+            echo "📥 Clonage initial du repository..."
+            cd /var/www
+            git clone https://github.com/SlyCatDev/project-web-app.git
           fi
+          
+          cd /var/www/project-web-app
+          echo "📥 Mise à jour du code..."
+          git pull origin main
+          
+          cd front-project
+          echo "📦 Installation de pnpm..."
+          if ! command -v pnpm &> /dev/null; then
+            npm install -g pnpm@9
+          fi
+          
+          echo "📚 Installation des dépendances..."
           pnpm install --frozen-lockfile
+          
+          echo "🏗️  Construction de l'application..."
           NODE_ENV=production VITE_API_URL=https://fakestoreapi.com pnpm run build
+          
+          echo "🔄 Rechargement de Nginx..."
           sudo systemctl reload nginx
+          
           echo "✅ Déploiement terminé avec succès !"
-          echo "L'application peut maintenant accéder à l'API FakeStore"
+          echo "🌐 L'application peut maintenant accéder à l'API FakeStore"
+          echo "📍 URL: http://$(curl -s ifconfig.me 2>/dev/null || echo 'votre-serveur')"

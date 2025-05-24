@@ -60,4 +60,4 @@ Si votre application utilise des variables d'environnement, ajoutez-les aussi :
 
 - **Nom** : `API_URL`
 - **Valeur** : L'URL de votre API backend
-- **Exemple** : `https://api.votre-domaine.com`
+- **Exemple** : `https://fakestoreapi.com`

@@ -32,3 +32,32 @@ Des points bonus peuvent être ajoutés pour l'ajout de fonctionnalités intér�
 * utilisation d'une bibliothèque de composant  
 * utilisation de docker
 * rendre le site traductible
+
+## 🔧 Dépannage
+
+### Erreurs SSH courantes
+
+Si vous rencontrez des erreurs d'authentification SSH :
+
+```text
+ssh: no key found
+ssh: handshake failed: ssh: unable to authenticate
+```
+
+**Solution rapide :**
+
+1. **Configurez automatiquement SSH** :
+
+   ```bash
+   ./setup-ssh-keys.sh username@votre-serveur
+   ```
+
+2. **Testez la connexion** :
+
+   ```bash
+   ./test-ssh-connection.sh username@votre-serveur
+   ```
+
+3. **Copiez la clé privée** affichée dans les secrets GitHub
+
+📖 **Guide détaillé** : Consultez `SSH_TROUBLESHOOTING.md` pour un dépannage complet.

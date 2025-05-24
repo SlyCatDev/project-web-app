@@ -108,9 +108,24 @@ jobs:
             
             # Ajuster les permissions après le clonage
             sudo chown -R $(whoami):$(whoami) /var/www/project-web-app
+          else
+            echo "📁 Répertoire existant trouvé"
+            # Corriger les permissions du répertoire existant
+            echo "🔧 Correction des permissions..."
+            sudo chown -R $(whoami):$(whoami) /var/www/project-web-app
+            sudo chmod -R u+rwX /var/www/project-web-app
           fi
           
           cd /var/www/project-web-app
+          
+          # Vérifier les permissions git avant le pull
+          echo "🔍 Vérification des permissions git..."
+          if [ ! -w ".git/FETCH_HEAD" ] 2>/dev/null; then
+            echo "🔧 Correction des permissions git..."
+            sudo chown -R $(whoami):$(whoami) .git/
+            sudo chmod -R u+rwX .git/
+          fi
+          
           echo "📥 Mise à jour du code..."
           git pull origin main
           

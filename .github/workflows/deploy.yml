@@ -101,21 +101,8 @@ jobs:
             echo "📝 Création du répertoire..."
             sudo mkdir -p /var/www/project-web-app
             sudo chown deploy /var/www/project-web-app
-            
-            echo "📥 Clonage initial du repository..."
-            cd /var/www
-            git clone https://github.com/SlyCatDev/project-web-app.git
-            
-            # Ajuster les permissions après le clonage
-            sudo chown -R deploy /var/www/project-web-app
-          else
-            echo "📁 Répertoire existant trouvé"
-            # Corriger les permissions du répertoire existant
-            echo "🔧 Correction des permissions..."
-            sudo chown -R deploy /var/www/project-web-app
-            sudo chmod -R u+rwX /var/www/project-web-app
           fi
-          
+            
           cd /var/www/project-web-app
           
           # Vérifier les permissions git avant le pull
@@ -125,11 +112,16 @@ jobs:
             sudo chown -R deploy .git/
             sudo chmod -R u+rwX .git/
           fi
+          else
+            echo "❌ Répertoire .git non trouvé"
+            exit 1
+          fi
           
           echo "📥 Mise à jour du code..."
           git pull origin main
           
           cd front-project
+          
           echo "📦 Installation de pnpm..."
           if ! command -v pnpm &> /dev/null; then
             npm install -g pnpm@9

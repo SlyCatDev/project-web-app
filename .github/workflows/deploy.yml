@@ -99,29 +99,17 @@ jobs:
           if [ ! -d "/var/www/project-web-app" ]; then
             echo "❌ Répertoire /var/www/project-web-app non trouvé"
             echo "📝 Création du répertoire..."
-            sudo mkdir -p /var/www/project-web-app
-            sudo chown deploy /var/www/project-web-app
+            mkdir -p /var/www/project-web-app
+            chown deploy /var/www/project-web-app
           fi
             
           cd /var/www/project-web-app
-          
-          # Vérifier les permissions git avant le pull
-          echo "🔍 Vérification des permissions git..."
-          if [ ! -w ".git/FETCH_HEAD" ] 2>/dev/null; then
-            echo "🔧 Correction des permissions git..."
-            sudo chown -R deploy .git/
-            sudo chmod -R u+rwX .git/
-          fi
-          else
-            echo "❌ Répertoire .git non trouvé"
-            exit 1
-          fi
-          
+
           echo "📥 Mise à jour du code..."
           git pull origin main
           
           cd front-project
-          
+
           echo "📦 Installation de pnpm..."
           if ! command -v pnpm &> /dev/null; then
             npm install -g pnpm@9

@@ -1,5 +1,5 @@
 <template>
-    <p>bonjour</p>
+    <p>salut test</p>
 </template>
 
 <script>

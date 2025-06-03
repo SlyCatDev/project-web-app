@@ -1,17 +1,29 @@
 <script>
+import { useCartStore } from '@/stores/cart.js';
+
 export default {
   name: 'NavBar',
+  setup() {
+    const cartStore = useCartStore();
+    
+    return {
+      cartStore
+    };
+  },
   data() {
     return {
       menuItems: [
         { text: 'Accueil', path: '/' },
         { text: 'Produits', path: '/products' },
-        { text: 'Accessoires', path: '/accessories' },
-        { text: 'new', path: '/new', isHighlighted: true }
+        // { text: 'Accessoires', path: '/accessories' },
       ],
-      cartItemsCount: 0,
       isMobileMenuOpen: false
     };
+  },
+  computed: {
+    cartItemsCount() {
+      return this.cartStore.itemCount;
+    }
   },
   methods: {
     toggleMobileMenu() {
@@ -27,7 +39,7 @@ export default {
       <!-- Logo -->
       <div class="navbar-logo">
         <router-link to="/" class="logo-link">
-          <span class="logo-text">Boutique</span>
+          <span class="logo-text">Mock&Shop</span>
         </router-link>
       </div>
 

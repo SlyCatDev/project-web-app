@@ -1,7 +1,7 @@
 <template>
   <div class="product-card" :class="{ 'product-card--loading': loading }">
     <div class="product-image-container">
-      <router-link :to="productLink">
+      <div class="product-image-wrapper">
         <img
           v-if="product.image && !loading"
           :src="product.image"
@@ -9,7 +9,7 @@
           class="product-image"
         />
         <div v-else class="product-image-placeholder"></div>
-      </router-link>
+      </div>
       <button class="cart-button" @click="addToCart" aria-label="Add to cart">
         <span class="cart-icon">+</span>
       </button>
@@ -17,7 +17,7 @@
     
     <div class="product-info">
       <h3 class="product-title">
-        <router-link :to="productLink">{{ truncatedTitle }}</router-link>
+        <span>{{ truncatedTitle }}</span>
       </h3>
       <div class="product-category" v-if="product.category">{{ product.category }}</div>
       <div class="product-price">{{ priceFormatted }}</div>

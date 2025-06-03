@@ -26,27 +26,37 @@
     
     <!-- Liste des produits -->
     <div v-if="!loading && !error" class="products-grid">
-      <div v-for="product in products" :key="product.id" class="product-card">
-        <img :src="product.image" :alt="product.title" class="product-image">
-        <div class="product-info">
-          <h3>{{ product.title }}</h3>
-          <p class="product-category">{{ product.category }}</p>
-          <div class="product-price">{{ product.price }} €</div>
-          <div class="product-rating" v-if="product.rating">
-            <span>{{ product.rating.rate }} ★</span>
-            <span class="product-count">({{ product.rating.count }})</span>
-          </div>
-        </div>
-      </div>
+      <ProductCard
+        v-for="product in products"
+        :key="product.id"
+        :product="product"
+        @add-to-cart="handleAddToCart"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import { productService } from '@/services/api.js';
+import ProductCard from '@/components/products/ProductCard.vue';
+import { useCartStore } from '@/stores/cart.js';
+import { useNotifications } from '@/composables/useNotifications.js';
 
 export default {
   name: 'ProductList',
+  components: {
+    ProductCard
+  },
+  setup() {
+    const cartStore = useCartStore();
+    const { showSuccess, showError } = useNotifications();
+    
+    return {
+      cartStore,
+      showSuccess,
+      showError
+    };
+  },
   
   data() {
     return {
@@ -96,6 +106,17 @@ export default {
     // Charger tous les produits sans filtre
     resetFilters() {
       this.loadProducts();
+    },
+    
+    // Gérer l'ajout au panier
+    handleAddToCart(product) {
+      const success = this.cartStore.addToCart(product, 1);
+      
+      if (success) {
+        this.showSuccess(`${product.title} ajouté au panier !`);
+      } else {
+        this.showError('Erreur lors de l\'ajout au panier');
+      }
     }
   },
   
@@ -135,76 +156,36 @@ export default {
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.product-card {
-  border: 1px solid #eee;
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.product-image {
-  width: 100%;
-  height: 200px;
-  object-fit: contain;
-  padding: 10px;
-  background-color: white;
-}
-
-.product-info {
-  padding: 15px;
-}
-
-.product-info h3 {
-  margin-top: 0;
-  font-size: 16px;
-  height: 40px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
-.product-category {
-  color: #666;
-  font-size: 14px;
-  text-transform: capitalize;
-  margin: 5px 0;
-}
-
-.product-price {
-  font-weight: bold;
-  font-size: 18px;
-  margin: 10px 0;
-}
-
-.product-rating {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-}
-
-.product-count {
-  margin-left: 5px;
-  color: #666;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 2rem;
 }
 
 .loading, .error {
   text-align: center;
-  padding: 20px;
+  padding: 40px;
   font-size: 18px;
 }
 
 .error {
-  color: #e74c3c;
+  color: #dc2626;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .products-container {
+    padding: 16px;
+  }
+  
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  
+  .categories-filter {
+    justify-content: center;
+  }
 }
 </style>

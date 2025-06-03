@@ -76,3 +76,42 @@ export function useProducts() {
     fetchCategories
   }
 }
+
+// Composable spécialisé pour le panier
+export function useCart() {
+  const api = useApi()
+
+  const fetchCarts = async () => {
+    const { cartService } = await import('@/services/api.js')
+    return api.executeRequest(() => cartService.getAllCarts())
+  }
+
+  const fetchCart = async (id) => {
+    const { cartService } = await import('@/services/api.js')
+    return api.executeRequest(() => cartService.getCart(id))
+  }
+
+  const addToCart = async (productId, quantity = 1, userId = 1) => {
+    const { cartService } = await import('@/services/api.js')
+    return api.executeRequest(() => cartService.addToCart(productId, quantity, userId))
+  }
+
+  const updateCart = async (cartId, products, userId = 1) => {
+    const { cartService } = await import('@/services/api.js')
+    return api.executeRequest(() => cartService.updateCart(cartId, products, userId))
+  }
+
+  const deleteCart = async (cartId) => {
+    const { cartService } = await import('@/services/api.js')
+    return api.executeRequest(() => cartService.deleteCart(cartId))
+  }
+
+  return {
+    ...api,
+    fetchCarts,
+    fetchCart,
+    addToCart,
+    updateCart,
+    deleteCart
+  }
+}

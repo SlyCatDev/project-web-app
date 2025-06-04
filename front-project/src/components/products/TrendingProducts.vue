@@ -34,7 +34,7 @@
 
 <script>
 import ProductCard from '@/components/products/ProductCard.vue';
-import { productService } from '@/services/api.js';
+import { productService } from '@/services';
 
 export default {
   name: 'TrendingProducts',

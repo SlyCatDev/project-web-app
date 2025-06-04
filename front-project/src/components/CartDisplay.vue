@@ -203,4 +203,7 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  padding: 2rem;
+}
 </style>

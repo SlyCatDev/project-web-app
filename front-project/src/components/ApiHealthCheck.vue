@@ -52,7 +52,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { productService } from '@/services/api.js'
+import { productService } from '@/services'
 
 // États réactifs
 const isLoading = ref(false)

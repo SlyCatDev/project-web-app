@@ -49,22 +49,22 @@ export function useProducts() {
   const api = useApi()
 
   const fetchProducts = async (limit = null, sort = null) => {
-    const { productService } = await import('@/services/api.js')
+    const { productService } = await import('@/services')
     return api.executeRequest(() => productService.getAllProducts(limit, sort))
   }
 
   const fetchProduct = async (id) => {
-    const { productService } = await import('@/services/api.js')
+    const { productService } = await import('@/services')
     return api.executeRequest(() => productService.getProduct(id))
   }
 
   const fetchProductsByCategory = async (category) => {
-    const { productService } = await import('@/services/api.js')
+    const { productService } = await import('@/services')
     return api.executeRequest(() => productService.getProductsByCategory(category))
   }
 
   const fetchCategories = async () => {
-    const { productService } = await import('@/services/api.js')
+    const { productService } = await import('@/services')
     return api.executeRequest(() => productService.getCategories())
   }
 
@@ -82,27 +82,27 @@ export function useCart() {
   const api = useApi()
 
   const fetchCarts = async () => {
-    const { cartService } = await import('@/services/api.js')
+    const { cartService } = await import('@/services')
     return api.executeRequest(() => cartService.getAllCarts())
   }
 
   const fetchCart = async (id) => {
-    const { cartService } = await import('@/services/api.js')
+    const { cartService } = await import('@/services')
     return api.executeRequest(() => cartService.getCart(id))
   }
 
   const addToCart = async (productId, quantity = 1, userId = 1) => {
-    const { cartService } = await import('@/services/api.js')
+    const { cartService } = await import('@/services')
     return api.executeRequest(() => cartService.addToCart(productId, quantity, userId))
   }
 
   const updateCart = async (cartId, products, userId = 1) => {
-    const { cartService } = await import('@/services/api.js')
+    const { cartService } = await import('@/services')
     return api.executeRequest(() => cartService.updateCart(cartId, products, userId))
   }
 
   const deleteCart = async (cartId) => {
-    const { cartService } = await import('@/services/api.js')
+    const { cartService } = await import('@/services')
     return api.executeRequest(() => cartService.deleteCart(cartId))
   }
 

@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { productService } from '@/services/api.js';
+import { productService } from '@/services';
 import ProductCard from '@/components/products/ProductCard.vue';
 import { useCartStore } from '@/stores/cart.js';
 import { useNotifications } from '@/composables/useNotifications.js';

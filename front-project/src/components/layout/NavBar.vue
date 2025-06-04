@@ -1,13 +1,84 @@
+<template>
+  <header class="navbar">
+    <div class="container navbar-container">
+      <!-- Logo -->
+      <div class="navbar-logo">
+        <router-link to="/" class="logo-link">
+          <img src="@/assets/logo.svg" alt="logo" class="w-14 h-auto" />
+        </router-link>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-toggle" @click="toggleMobileMenu" aria-label="Toggle menu">
+        <span class="mobile-menu-icon">☰</span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav class="navbar-menu" :class="{ 'is-open': isMobileMenuOpen }">
+        <ul class="menu-items">
+          <li v-for="item in menuItems" :key="item.text" class="menu-item">
+            <router-link :to="item.path" class="menu-link" :class="{ 'is-highlighted': item.isHighlighted }">
+              {{ item.text }}
+            </router-link>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Actions (Search, Auth & Cart) -->
+      <div class="navbar-actions">
+        <button class="action-button search-button" aria-label="Search">
+          <span class="search-icon">🔍</span>
+        </button>
+        
+        <!-- Boutons d'authentification -->
+        <div class="auth-actions">
+          <div v-if="isAuthenticated" class="user-menu">
+            <span class="user-welcome">👋 {{ user.username }}</span>
+            <button @click="handleLogout" class="action-button logout-button">
+              Déconnexion
+            </button>
+          </div>
+          <div v-else class="auth-buttons">
+            <router-link to="/signIn" class="action-button login-button">
+              Connexion
+            </router-link>
+            <router-link to="/register" class="action-button register-button">
+              Inscription
+            </router-link>
+          </div>
+        </div>
+        
+        <router-link to="/cart" class="action-button cart-button">
+          <span class="cart-icon">🛒</span>
+          <span v-if="cartItemsCount > 0" class="cart-badge">{{ cartItemsCount }}</span>
+        </router-link>
+      </div>
+    </div>
+  </header>
+</template>
+
 <script>
 import { useCartStore } from '@/stores/cart.js';
+import { useAuth } from '@/composables/useAuth.js';
+import { useNotificationStore } from '@/composables/useNotifications.js';
 
 export default {
   name: 'NavBar',
   setup() {
     const cartStore = useCartStore();
+    const { isAuthenticated, user, logout } = useAuth();
+    const notificationStore = useNotificationStore();
+    
+    const handleLogout = () => {
+      logout();
+      notificationStore.showSuccess('Déconnexion réussie !');
+    };
     
     return {
-      cartStore
+      cartStore,
+      isAuthenticated,
+      user,
+      handleLogout
     };
   },
   data() {
@@ -32,46 +103,6 @@ export default {
   }
 };
 </script>
-
-<template>
-  <header class="navbar">
-    <div class="container navbar-container">
-      <!-- Logo -->
-      <div class="navbar-logo">
-        <router-link to="/" class="logo-link">
-          <span class="logo-text">Mock&Shop</span>
-        </router-link>
-      </div>
-
-      <!-- Mobile Menu Toggle -->
-      <button class="mobile-menu-toggle" @click="toggleMobileMenu" aria-label="Toggle menu">
-        <span class="mobile-menu-icon">☰</span>
-      </button>
-
-      <!-- Navigation Links -->
-      <nav class="navbar-menu" :class="{ 'is-open': isMobileMenuOpen }">
-        <ul class="menu-items">
-          <li v-for="item in menuItems" :key="item.text" class="menu-item">
-            <router-link :to="item.path" class="menu-link" :class="{ 'is-highlighted': item.isHighlighted }">
-              {{ item.text }}
-            </router-link>
-          </li>
-        </ul>
-      </nav>
-
-      <!-- Actions (Search & Cart) -->
-      <div class="navbar-actions">
-        <button class="action-button search-button" aria-label="Search">
-          <span class="search-icon">🔍</span>
-        </button>
-        <router-link to="/cart" class="action-button cart-button">
-          <span class="cart-icon">🛒</span>
-          <span v-if="cartItemsCount > 0" class="cart-badge">{{ cartItemsCount }}</span>
-        </router-link>
-      </div>
-    </div>
-  </header>
-</template>
 
 <style scoped>
 .navbar {
@@ -198,6 +229,73 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Styles pour l'authentification */
+.auth-actions {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-welcome {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.login-button {
+  background-color: var(--primary-color);
+  color: white !important;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.login-button:hover {
+  background-color: var(--primary-color-dark, #1d4ed8);
+}
+
+.register-button {
+  background-color: #10b981;
+  color: white !important;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.register-button:hover {
+  background-color: #059669;
+}
+
+.logout-button {
+  background-color: #ef4444;
+  color: white !important;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.logout-button:hover {
+  background-color: #dc2626;
 }
 
 /* Styles pour desktop */

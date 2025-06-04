@@ -1,3 +1,73 @@
+<template>
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Footer Links Section -->
+      <div class="footer-links-section">
+        <!-- <div class="footer-column">
+          <h3 class="footer-title">Liens utiles</h3>
+          <ul class="footer-menu">
+            <li v-for="link in usefulLinks" :key="link.text">
+              <router-link :to="link.path" class="footer-link">{{ link.text }}</router-link>
+            </li>
+          </ul>
+        </div> -->
+        
+        <div class="footer-column">
+          <h3 class="footer-title">Mock&Shop</h3>
+          <ul class="footer-menu">
+            <li v-for="link in shopLinks" :key="link.text">
+              <router-link :to="link.path" class="footer-link">{{ link.text }}</router-link>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-logo">
+        <!-- Logo -->
+        <router-link to="/">
+          <img src="@/assets/logo.svg" alt="logo" class="w-32 h-auto" />
+        </router-link>
+      </div>
+
+      <!-- Customer Service Section -->
+      <div class="customer-service">
+        <h3 class="footer-title">Besoin d'aide ? Ne nous appelez pas</h3>
+        <p class="service-phone">{{ contactInfo.phone }}</p>
+        <p class="service-hours">Lundi - Vendredi: {{ contactInfo.weekdayHours }}</p>
+        <p class="service-hours">Samedi: {{ contactInfo.weekendHours }}</p>
+        
+        <div class="social-links">
+          <a v-for="social in socialLinks" 
+             :key="social.icon" 
+             :href="social.url" 
+             class="social-link" 
+             target="_blank" 
+             rel="noopener noreferrer">
+            <span class="social-icon" v-html="social.svg"></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer Bottom - Copyright & Payment -->
+      <div class="footer-bottom">
+        <p class="copyright">
+          Copyright © {{ currentYear }} Mock&Shop. All Rights Reserved.
+        </p>
+        
+        <div class="payment-methods">
+          <span class="payment-title">Méthodes de paiement :</span>
+          <p>Rien</p>
+          <!-- <div class="payment-icons">
+            <span v-for="method in paymentMethods" :key="method.name" class="payment-icon">
+              <span v-html="method.svg"></span>
+            </span>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </footer>
+</template>
+
 <script>
 export default {
   name: 'FooterSection',
@@ -16,9 +86,9 @@ export default {
       //   { text: 'Contact', path: '/contact' }
       // ],
       contactInfo: {
-        phone: '02 41 12 31 23',
-        weekdayHours: '10:00 - 19:00',
-        weekendHours: '09:00 - 19:00'
+        phone: '02 41 42 42 42',
+        weekdayHours: '10:00 - 11:00',
+        weekendHours: '09:00 - 10:00'
       },
       socialLinks: [
         { 
@@ -28,7 +98,7 @@ export default {
         },
         { 
           icon: 'twitter', 
-          url: 'https://twitter.com',
+          url: 'https://x.com',
           svg: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>'
         },
         { 
@@ -65,78 +135,6 @@ export default {
   }
 };
 </script>
-
-<template>
-  <footer class="footer">
-    <div class="footer-container">
-      <!-- Footer Links Section -->
-      <div class="footer-links-section">
-        <!-- <div class="footer-column">
-          <h3 class="footer-title">Liens utiles</h3>
-          <ul class="footer-menu">
-            <li v-for="link in usefulLinks" :key="link.text">
-              <router-link :to="link.path" class="footer-link">{{ link.text }}</router-link>
-            </li>
-          </ul>
-        </div> -->
-        
-        <div class="footer-column">
-          <h3 class="footer-title">Mock&Shop</h3>
-          <ul class="footer-menu">
-            <li v-for="link in shopLinks" :key="link.text">
-              <router-link :to="link.path" class="footer-link">{{ link.text }}</router-link>
-            </li>
-          </ul>
-        </div>
-
-        <!-- <div class="footer-column">
-          <h3 class="footer-title">Entreprise</h3>
-          <ul class="footer-menu">
-            <li v-for="link in companyLinks" :key="link.text">
-              <router-link :to="link.path" class="footer-link">{{ link.text }}</router-link>
-            </li>
-          </ul>
-        </div> -->
-      </div>
-
-      <!-- Customer Service Section -->
-      <div class="customer-service">
-        <h3 class="footer-title">Besoin d'aide ? Appelez-nous</h3>
-        <p class="service-phone">{{ contactInfo.phone }}</p>
-        <p class="service-hours">Lundi - Vendredi: {{ contactInfo.weekdayHours }}</p>
-        <p class="service-hours">Samedi: {{ contactInfo.weekendHours }}</p>
-        
-        <div class="social-links">
-          <a v-for="social in socialLinks" 
-             :key="social.icon" 
-             :href="social.url" 
-             class="social-link" 
-             target="_blank" 
-             rel="noopener noreferrer">
-            <span class="social-icon" v-html="social.svg"></span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Footer Bottom - Copyright & Payment -->
-      <div class="footer-bottom">
-        <p class="copyright">
-          Copyright © {{ currentYear }} Mock&Shop. All Rights Reserved.
-        </p>
-        
-        <div class="payment-methods">
-          <span class="payment-title">Méthodes de paiement :</span>
-          <p>Rien</p>
-          <!-- <div class="payment-icons">
-            <span v-for="method in paymentMethods" :key="method.name" class="payment-icon">
-              <span v-html="method.svg"></span>
-            </span>
-          </div> -->
-        </div>
-      </div>
-    </div>
-  </footer>
-</template>
 
 <style scoped>
 .footer {

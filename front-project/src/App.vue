@@ -15,7 +15,6 @@ import NotificationToast from '@/components/ui/NotificationToast.vue'
     </main>
     <FooterSection />
     
-    <!-- Notifications globales -->
     <NotificationToast />
   </div>
 </template>

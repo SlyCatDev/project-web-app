@@ -200,10 +200,10 @@ export default {
 
     getButtonText() {
       const texts = {
-        add: '📥 Ajouter au panier',
-        update: '✏️ Modifier le panier',
-        delete: '🗑️ Supprimer le panier',
-        get: '👁️ Consulter le panier'
+        add: 'Ajouter au panier',
+        update: 'Modifier le panier',
+        delete: 'Supprimer le panier',
+        get: 'Consulter le panier'
       };
       return texts[this.selectedOperation];
     },

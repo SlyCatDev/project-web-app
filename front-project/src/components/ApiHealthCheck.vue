@@ -1,7 +1,7 @@
 <template>
   <div class="api-health-check p-4 border rounded-lg">
     <h3 class="text-lg font-semibold mb-4 flex items-center">
-      <span class="mr-2">🔍</span>
+      <span class="mr-2"></span>
       État de l'API FakeStore
     </h3>
     
@@ -52,7 +52,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { productService } from '@/services/api.js'
+import { productService } from '@/services'
 
 // États réactifs
 const isLoading = ref(false)

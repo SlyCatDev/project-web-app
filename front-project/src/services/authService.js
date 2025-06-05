@@ -140,6 +140,7 @@ export const authService = {
         username: userData.username,
         firstName: userData.firstName,
         lastName: userData.lastName,
+        phone: userData.phone || '', // Ajouter le numéro de téléphone
         password: userData.password, // Dans un vrai projet, on hasherait le mot de passe
         createdAt: new Date().toISOString()
       };
@@ -165,7 +166,8 @@ export const authService = {
             name: {
               firstname: userData.firstName,
               lastname: userData.lastName
-            }
+            },
+            phone: userData.phone || '' 
           })
         });
         

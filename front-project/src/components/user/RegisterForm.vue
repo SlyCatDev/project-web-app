@@ -88,6 +88,19 @@
             <p v-if="errors.lastName" class="mt-1 text-sm text-red-600">{{ errors.lastName }}</p>
           </div>
 
+          <!-- Numéro de téléphone -->
+          <div>
+            <input
+              v-model="formData.phone"
+              type="tel"
+              placeholder="Numéro de téléphone (optionnel)"
+              :disabled="isLoading"
+              class="w-full px-4 py-4 text-base bg-white border border-gray-300 rounded-lg outline-none text-gray-900 placeholder-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              :class="{ 'border-red-500 focus:border-red-500 focus:ring-red-200': errors.phone }"
+            />
+            <p v-if="errors.phone" class="mt-1 text-sm text-red-600">{{ errors.phone }}</p>
+          </div>
+
           <!-- Mot de passe -->
           <div>
             <input
@@ -241,6 +254,7 @@ const formData = reactive({
   username: '',
   firstName: '',
   lastName: '',
+  phone: '',
   password: '',
   confirmPassword: ''
 })
@@ -251,6 +265,7 @@ const errors = reactive({
   username: null,
   firstName: null,
   lastName: null,
+  phone: null,
   password: null,
   confirmPassword: null
 })
@@ -297,6 +312,12 @@ const validateForm = () => {
     isValid = false
   }
   
+  // Validation du numéro de téléphone (optionnel mais avec format si fourni)
+  if (formData.phone.trim() && !/^[+]?[\d\s\-()]{10,}$/.test(formData.phone.trim())) {
+    errors.phone = 'Le numéro de téléphone n\'est pas valide'
+    isValid = false
+  }
+  
   // Validation du mot de passe
   if (!formData.password.trim()) {
     errors.password = 'Le mot de passe est requis'
@@ -337,6 +358,7 @@ const handleSubmit = async () => {
       username: formData.username,
       firstName: formData.firstName,
       lastName: formData.lastName,
+      phone: formData.phone.trim() || undefined, // Envoyer undefined si vide
       password: formData.password
     })
     
@@ -385,6 +407,7 @@ const fillTestCredentials = () => {
   formData.username = 'testuser123'
   formData.firstName = 'Test'
   formData.lastName = 'User'
+  formData.phone = '06 12 34 56 78'
   formData.password = 'Test123!'
   formData.confirmPassword = 'Test123!'
 }

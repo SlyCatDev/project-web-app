@@ -6,8 +6,16 @@ if (import.meta.env.DEV) {
   console.log('🛍️ Product Service - API URL configurée:', API_URL);
 }
 
+// Fonction pour normaliser les produits (s'assurer que price est un nombre)
+const normalizeProduct = (product) => {
+  return {
+    ...product,
+    price: parseFloat(product.price) || 0
+  };
+};
+
 export const productService = {
-  // Récupérer tous les produits
+  // Récupérer tous les produits depuis l'API uniquement
   async getAllProducts(limit = null, sort = null) {
     try {
       let url = `${API_URL}/products`;
@@ -20,8 +28,16 @@ export const productService = {
         url += `?${params.join('&')}`;
       }
       
+      // Récupérer les produits de l'API
       const response = await fetch(url, defaultOptions);
-      return await handleResponse(response);
+      const apiProducts = await handleResponse(response);
+      
+      // Normaliser tous les produits pour s'assurer que les prix sont des nombres
+      const normalizedApiProducts = apiProducts.map(normalizeProduct);
+      
+      console.log(`📦 Produits chargés: ${normalizedApiProducts.length} de l'API`);
+      
+      return normalizedApiProducts;
     } catch (error) {
       console.error('Erreur lors de la récupération des produits:', error);
       throw error;

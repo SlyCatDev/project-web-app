@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ProductView from '@/views/ProductView.vue'
-// import ProductDetailView from '@/views/ProductDetailView.vue'
+import ProductDetailView from '@/views/ProductDetailView.vue'
 import CartView from '@/views/CartView.vue'
+import CheckoutView from '@/views/CheckoutView.vue'
+import OrderConfirmationView from '@/views/OrderConfirmationView.vue'
 import SignInView from '@/views/auth/SignInView.vue'
 import RegisterView from '@/views/auth/RegisterView.vue'
 import UserAccountView from '@/views/user/UserAccountView.vue'
@@ -21,15 +23,28 @@ const router = createRouter({
       name: 'produits',
       component: ProductView,
     },
-    // {
-    //   path: '/products/:id',
-    //   name: 'product-detail',
-    //   component: ProductDetailView,
-    // },
+    {
+      path: '/products/:id',
+      name: 'product-detail',
+      component: ProductDetailView,
+      props: true, // Permet de passer les paramètres de route comme props
+    },
     {
       path: '/cart',
       name: 'panier',
       component: CartView,
+      meta: { requiresAuth: true } // Route protégée
+    },
+    {
+      path: '/checkout',
+      name: 'commande',
+      component: CheckoutView,
+      meta: { requiresAuth: true } // Route protégée
+    },
+    {
+      path: '/order-confirmation/:orderNumber',
+      name: 'order-confirmation',
+      component: OrderConfirmationView,
       meta: { requiresAuth: true } // Route protégée
     },
     {

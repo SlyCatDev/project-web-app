@@ -1,22 +1,15 @@
 <template>
   <div class="user-account-view">
-    <div class="container mx-auto px-4 py-8 space-y-12">
-      <!-- En-tête -->
-      <section>
-        <div class="bg-white rounded-lg shadow-sm p-8">
-          <div class="flex items-center justify-between">
-            <div>
-              <h1 class="text-2xl font-bold text-gray-900">Mon Compte</h1>
-              <p class="text-gray-600 mt-1">Gérez vos informations personnelles et vos préférences</p>
-            </div>
-          </div>
+    <div class="container mx-auto px-4 py-8">
+      <div class="bg-white rounded-lg shadow-sm p-8 space-y-8">
+        <!-- En-tête -->
+        <div class="pb-6">
+          <h1 class="text-2xl font-bold text-gray-900">Mon Compte</h1>
+          <p class="text-gray-600 mt-1">Gérez vos informations personnelles et vos préférences</p>
         </div>
-      </section>
-      
-      <!-- Informations utilisateur -->
-      <section>
-        <div class="bg-white rounded-lg shadow-sm p-8">
-          <h2 class="text-xl font-semibold text-gray-900 mb-6">Informations personnelles</h2>
+        
+        <!-- Informations utilisateur -->
+        <div>
           <div v-if="user" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Prénom</label>
@@ -40,31 +33,23 @@
             </div>
           </div>
         </div>
-      </section>
-      
-      <!-- Actions rapides -->
-      <section>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div class="bg-white rounded-lg shadow-sm p-8">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Mes commandes</h3>
-            <p class="text-gray-600 mb-6">Consultez l'historique de vos commandes</p>
-            <button class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-medium">
-              Voir mes commandes
-            </button>
-          </div>
-          
-          <div class="bg-white rounded-lg shadow-sm p-8">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Mon panier</h3>
-            <p class="text-gray-600 mb-6">Accédez rapidement à votre panier</p>
-            <router-link 
-              to="/cart" 
-              class="block w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-colors text-center font-medium"
-            >
-              Voir mon panier
-            </router-link>
+        
+        <!-- Actions rapides -->
+        <div class="border-t border-gray-200 pt-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="border border-gray-200 rounded-lg p-6">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">Mon panier</h3>
+              <p class="text-gray-600 mb-6">Accédez rapidement à votre panier</p>
+              <router-link 
+                to="/cart" 
+                class="block w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-colors text-center font-medium"
+              >
+                Voir mon panier
+              </router-link>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   </div>
 </template>

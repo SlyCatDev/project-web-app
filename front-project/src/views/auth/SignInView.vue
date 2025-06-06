@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import SignInForm from '@/components/user/SignInForm.vue';
+import SignInForm from '@/components/auth/SignInForm.vue';
 </script>
 
 <style scoped>

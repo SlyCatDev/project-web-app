@@ -26,9 +26,9 @@
 
       <!-- Actions (Search, Auth & Cart) -->
       <div class="navbar-actions">
-        <button class="action-button search-button" aria-label="Search">
+        <!-- <button class="action-button search-button" aria-label="Search">
           <span class="search-icon">🔍</span>
-        </button>
+        </button> -->
         
         <!-- Boutons d'authentification -->
         <div class="auth-actions">
@@ -42,10 +42,8 @@
           </div>
           <div v-else class="auth-buttons">
             <router-link to="/signIn" class="action-button login-button">
-              Connexion
-            </router-link>
-            <router-link to="/register" class="action-button register-button">
-              Inscription
+              <IconLogin class="login-icon" />
+              Se connecter
             </router-link>
           </div>
         </div>
@@ -63,9 +61,13 @@
 import { useCartStore } from '@/stores/cart.js';
 import { useAuth } from '@/composables/useAuth.js';
 import { useNotificationStore } from '@/composables/useNotifications.js';
+import IconLogin from '@/components/icons/IconLogin.vue';
 
 export default {
   name: 'NavBar',
+  components: {
+    IconLogin
+  },
   setup() {
     const cartStore = useCartStore();
     const { isAuthenticated, user, logout } = useAuth();
@@ -266,6 +268,14 @@ export default {
   font-size: 0.9rem;
   font-weight: 500;
   transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.login-icon {
+  width: 16px;
+  height: 16px;
 }
 
 .login-button:hover {

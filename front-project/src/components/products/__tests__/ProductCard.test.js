@@ -7,7 +7,7 @@ describe('ProductCard.vue', () => {
     id: 1,
     title: 'Super produit avec un nom très très long pour tester la troncature',
     price: 19.99,
-    image: 'https://via.placeholder.com/150',
+    image: 'https://placehold.co/150',
     category: 'electronics'
   };
 

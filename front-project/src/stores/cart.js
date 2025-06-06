@@ -1,9 +1,7 @@
 import { defineStore } from 'pinia'
 
-// Clé pour le localStorage
 const CART_STORAGE_KEY = 'ecommerce_cart'
 
-// Charger le panier depuis localStorage
 const loadCartFromStorage = () => {
   try {
     const savedCart = localStorage.getItem(CART_STORAGE_KEY)
@@ -18,7 +16,6 @@ const loadCartFromStorage = () => {
   }
 }
 
-// Sauvegarder le panier dans localStorage
 const saveCartToStorage = (items) => {
   try {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items))
@@ -56,7 +53,6 @@ export const useCartStore = defineStore('cart', {
   },
 
   actions: {
-    // Ajouter un produit au panier
     addToCart(product, quantity = 1) {
       try {
         this.error = null

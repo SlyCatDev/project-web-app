@@ -1,5 +1,5 @@
 <template>
-  <div class="product-card" :class="{ 'product-card--loading': loading }">
+  <div class="product-card" :class="{ 'product-card--loading': loading }" @click="navigateToDetail">
     <div class="product-image-container">
       <div class="product-image-wrapper">
         <img
@@ -7,10 +7,12 @@
           :src="product.image"
           :alt="product.title"
           class="product-image"
+          @load="handleImageLoad"
+          @error="handleImageError"
         />
         <div v-else class="product-image-placeholder"></div>
       </div>
-      <button class="cart-button" @click="addToCart" aria-label="Add to cart">
+      <button class="cart-button" @click.stop="addToCart" aria-label="Add to cart">
         <span class="cart-icon">+</span>
       </button>
     </div>
@@ -26,6 +28,8 @@
 </template>
 
 <script>
+import { formatPriceCompact } from '@/utils/currency.js';
+
 export default {
   name: 'ProductCard',
   props: {
@@ -45,7 +49,7 @@ export default {
   },
   computed: {
     priceFormatted() {
-      return `$${this.product.price.toFixed(2)}`;
+      return formatPriceCompact(this.product.price);
     },
     productLink() {
       return `/products/${this.product.id}`;
@@ -59,6 +63,16 @@ export default {
   methods: {
     addToCart() {
       this.$emit('add-to-cart', this.product);
+    },
+    navigateToDetail() {
+      this.$router.push({ name: 'product-detail', params: { id: this.product.id } });
+    },
+    handleImageLoad(event) {
+      event.target.classList.add('loaded');
+    },
+    handleImageError(event) {
+      event.target.src = 'https://via.placeholder.com/300x300?text=Produit';
+      event.target.classList.add('loaded');
     }
   }
 };
@@ -74,6 +88,7 @@ export default {
   flex-direction: column;
   height: 100%;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
 }
 
 .product-card:hover {
@@ -96,10 +111,17 @@ export default {
   height: 100%;
   object-fit: contain;
   padding: 1rem;
-  transition: transform 0.6s ease;
+  transition: transform 0.6s ease, opacity 0.4s ease;
+  opacity: 0;
+  transform: scale(0.8);
 }
 
-.product-card:hover .product-image {
+.product-image.loaded {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.product-card:hover .product-image.loaded {
   transform: scale(1.05);
 }
 

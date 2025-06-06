@@ -49,8 +49,8 @@ export default {
     return {
       heroBannerContent: {
         title: 'Nouvelle collection',
-        subtitle: 'Trending Products',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut magna, quis diam et, cursus placerat ipsum. In nibh lacus eleifend tristique quam et, consequat semper.',
+        subtitle: 'Chemises passage CDA',
+        description: 'De belle chemise pour assurer votre style pour une soutenance CDA',
         buttonText: 'Voir les produits',
         image: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
       }

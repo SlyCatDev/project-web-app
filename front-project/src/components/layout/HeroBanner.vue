@@ -21,15 +21,6 @@
           <img :src="image" alt="Hero image" class="hero-image" />
         </div>
       </div>
-
-      <div class="hero-controls">
-        <button class="control-button prev-button" aria-label="Previous slide">
-          <span class="control-icon">&lt;</span>
-        </button>
-        <button class="control-button next-button" aria-label="Next slide">
-          <span class="control-icon">&gt;</span>
-        </button>
-      </div>
     </div>
   </section>
 </template>
@@ -53,7 +44,7 @@ export default {
     },
     description: {
       type: String,
-      default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut magna, quis diam et, cursus placerat ipsum. In nibh lacus eleifend tristique quam et, consequat semper.'
+      default: 'Des supers belles chemises pour assurer au CDA'
     },
     buttonText: {
       type: String,
@@ -142,38 +133,6 @@ export default {
   object-fit: cover;
 }
 
-.hero-controls {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  display: flex;
-  gap: 0.5rem;
-}
-
-.control-button {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background-color: white;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.control-button:hover {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-.control-icon {
-  font-size: 1rem;
-  font-weight: bold;
-}
-
 /* Styles pour tablette */
 @media (min-width: 768px) {
   .hero-content {
@@ -210,11 +169,6 @@ export default {
   
   .hero-image-container {
     height: 500px;
-  }
-  
-  .hero-controls {
-    bottom: 2rem;
-    right: 2rem;
   }
 }
 

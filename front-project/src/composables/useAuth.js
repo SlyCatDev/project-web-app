@@ -91,7 +91,7 @@ export function useAuth() {
     }
   }
   
-  // Initialisation : vérifier si l'utilisateur est déjà connecté
+  
   checkAuth()
     return {
     // État

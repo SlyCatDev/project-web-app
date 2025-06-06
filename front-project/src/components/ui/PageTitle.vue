@@ -16,7 +16,7 @@ export default {
   props: {
     pagetitle: {
       type: String,
-      default: 'Page Title'
+      default: 'Liste des produits'
     }
   }
 };

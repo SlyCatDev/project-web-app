@@ -118,6 +118,7 @@
                 Vider le panier
               </button>
               <button 
+                @click="proceedToCheckout"
                 class="flex-1 px-4 py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition-colors"
               >
                 Procéder au paiement
@@ -132,6 +133,7 @@
 
 <script>
 import { useCartStore } from '@/stores/cart.js';
+import { formatPrice } from '@/utils/currency.js';
 import LoadingSpinner from './ui/LoadingSpinner.vue';
 
 export default {
@@ -163,7 +165,12 @@ export default {
   mounted() {
     // Effacer les erreurs précédentes
     this.cartStore.clearError();
-  },  methods: {
+  },  
+  methods: {
+    formatPrice(price) {
+      return formatPrice(price);
+    },
+
     async updateQuantity(productId, newQuantity) {
       if (newQuantity < 1) return;
       
@@ -191,8 +198,17 @@ export default {
       if (!success) {
         console.error('Erreur lors du vidage du panier');
       }
-    },formatPrice(price) {
-      return `${price.toFixed(2)} €`;
+    },
+
+    proceedToCheckout() {
+      // Vérifier que le panier n'est pas vide
+      if (!this.cartItems || this.cartItems.length === 0) {
+        alert('Votre panier est vide. Ajoutez des produits avant de procéder au paiement.');
+        return;
+      }
+      
+      // Rediriger vers la page de checkout
+      this.$router.push('/checkout');
     },
 
     handleImageError(event) {

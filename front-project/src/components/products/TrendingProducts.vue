@@ -19,15 +19,6 @@
           @add-to-cart="handleAddToCart"
         />
       </div>
-      
-      <div class="trending-controls">
-        <button class="control-button prev-button" aria-label="Previous products">
-          <span class="control-icon">&lt;</span>
-        </button>
-        <button class="control-button next-button" aria-label="Next products">
-          <span class="control-icon">&gt;</span>
-        </button>
-      </div>
     </div>
   </section>
 </template>
@@ -122,37 +113,6 @@ export default {
   padding: 2rem;
   background-color: #fee2e2;
   border-radius: 0.5rem;
-}
-
-.trending-controls {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-  gap: 0.5rem;
-}
-
-.control-button {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background-color: white;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.control-button:hover {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-.control-icon {
-  font-size: 1rem;
-  font-weight: bold;
 }
 
 @keyframes pulse {
